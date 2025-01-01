@@ -3,22 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kirinyaga University</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Kirinyaga University Suggestion Box</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Apply box-sizing to all elements */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background: #0056b3; /* University color */
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            margin: 10px 0;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .suggestion-form, .suggestion-list {
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 20px 0;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #0056b3; /* University color */
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            resize: vertical;
+            max-width: 100%; /* Prevent overflow */
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            background: #28a745; /* Green color */
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+            width: 100%; /* Make button full width */
+            max-width: 100%; /* Prevent overflow */
+        }
+
+        button:hover {
+            background: #218838; /* Darker green */
+        }
+
+        .suggestion-item {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #333;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            main {
+                padding: 10px;
+            }
+
+            .suggestion-form, .suggestion-list {
+                padding: 15px; /* Reduce padding for smaller screens */
+            }
+
+            textarea {
+                font-size: 14px; /* Slightly smaller font size for textarea */
+            }
+
+            h2 {
+                font-size: 1.5em; /* Adjust heading size for smaller screens */
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
         <h1>Kirinyaga University Suggestion Box</h1>
+        <nav>
+            <a href="#submit">Submit Suggestion</a>
+            <a href="#view">View Suggestions</a>
+        </nav>
     </header>
     
     <main>
-        <section class="suggestion-form">
+        <section class="suggestion-form" id=" submit">
             <h2>Submit Your Suggestion</h2>
             <textarea id="suggestion-input" placeholder="Type your suggestion here..." rows="4"></textarea>
             <button id="submit-button">Submit</button>
         </section>
 
-        <section class="suggestion-list">
+        <section class="suggestion-list" id="view">
             <h2>Suggestions</h2>
             <div id="suggestions-container">
                 <!-- Suggestions will be dynamically inserted here -->
@@ -26,6 +151,39 @@
         </section>
     </main>
 
-    <script src="scripts.js"></script>
+    <footer>
+        <p>&copy; 2023 Kirinyaga University. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const suggestions = [];
+
+        function displaySuggestions() {
+            const suggestionsContainer = document.getElementById('suggestions-container');
+            suggestionsContainer.innerHTML = ''; // Clear previous suggestions
+            suggestions.forEach((suggestion) => {
+                const suggestionItem = document.createElement('div');
+                suggestionItem.className = 'suggestion-item';
+                suggestionItem.innerText = suggestion;
+                suggestionsContainer.appendChild(suggestionItem);
+            });
+        }
+
+        document.getElementById('submit-button').addEventListener('click', () => {
+            const suggestionInput = document.getElementById('suggestion-input');
+            const suggestionText = suggestionInput.value.trim();
+            
+            if (suggestionText) {
+                suggestions.push(suggestionText);
+                suggestionInput.value = ''; // Clear the input
+                displaySuggestions(); // Update the displayed suggestions
+            } else {
+                alert('Please enter a suggestion before submitting.');
+            }
+        });
+
+        // Initial display of suggestions (if any)
+        displaySuggestions();
+    </script>
 </body>
 </html>
